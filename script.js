@@ -20,7 +20,7 @@ setInterval(actualizarContador, 1000);
 
 // ===== FUNCION DE CONTRASEÑA =====
 function verificar() {
-    const claveCorrecta = "seven"; // Cambia por la contraseña de la página actual
+    const claveCorrecta = "ouroboros"; // Cambia por la contraseña de la página actual
     const passwordInput = document.getElementById("password");
 
     if(!passwordInput) return; // evita errores si no hay input
