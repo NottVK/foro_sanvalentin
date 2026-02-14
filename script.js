@@ -20,7 +20,7 @@ setInterval(actualizarContador, 1000);
 
 // ===== FUNCION DE CONTRASEÑA =====
 function verificar() {
-    const claveCorrecta = "vaalkev"; // Cambia por la contraseña de la página actual
+    const claveCorrecta = "hurones"; // Cambia por la contraseña de la página actual
     const passwordInput = document.getElementById("password");
 
     if(!passwordInput) return; // evita errores si no hay input
@@ -112,4 +112,5 @@ if(canvas){
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
     });
+
 }
