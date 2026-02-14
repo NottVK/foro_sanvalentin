@@ -1,170 +1,160 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="UTF-8">
-<title>Nuestro Rompecabezas 💖</title>
-<style>
+    <meta charset="UTF-8">
+    <title>Nuestro Rompecabezas 💖</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: linear-gradient(circle at 30%40%, rgba(255, 182, 193, 0.4), transparent 40%),
+            radial-gradient(circle at 70%60%, rgba(135, 206, 250, 0.4), transparent 40%),
+            radial-gradient(circle at 50%50%, #0f0c29,#302b63,#24243e);
+            color: white;
+            font-family: arial;
+            overflow: hidden;
 
-    body {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        background: linear-gradient(to top, #ffc1d6,#ffe6f0,#87cefa);
-        color:white;
-        font-family: arial;
-        overflow: hidden;
-
-    }
-
-    body::before {
-        content: "";
-        position: fixed;
-        inset: 0;
-        background: rgba(0,0,0,0.4);
-        z-index:-1;
-    }
+        }
 
 
 
 
-#puzzle {
-    width: 300px;
-    height: 300px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-    backdrop-filter: blur(10px);
-    background:rgba(255,255,255,0.1);
-    padding: 10px;
-    border-radius: 15px;
-}
 
-.tile {
-    width: 100px;
-    height: 100px;
-    background-image: url('rompecabezas.jpg');
-    background-size: 300px 300px;
-    cursor: pointer;
-}
+        #puzzle {
+            width: 300px;
+            height: 300px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 15px;
+        }
 
-.empty {
-    background: black;
-}
-    .petalos {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    overflow: hidden;
-}
+        .tile {
+            width: 100px;
+            height: 100px;
+            background-image: url('rompecabezas.jpg');
+            background-size: 300px 300px;
+            cursor: pointer;
+        }
 
-.petalos span {
-    position: absolute;
-    width: 15px;
-    height: 15px;
-    background: pink;
-    border-radius: 50% 50% 50% 0;
-    opacity: 0.8;
-    animation: caer linear infinite;
-}
+        .empty {
+            background: black;
+        }
 
-@keyframes caer {
-    0% {
-        transform: translateY(-10px) rotate(0deg);
-    }
-    100% {
-        transform: translateY(100vh) rotate(360deg);
-    }
-}
+        .petalos {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
 
+        .petalos span {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: pink;
+            border-radius: 50% 50% 50% 0;
+            opacity: 0.8;
+            animation: caer linear infinite;
+        }
 
+        @keyframes caer {
+            0% {
+                transform: translateY(-10px) rotate(0deg);
+            }
 
-</style>
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-<h2>Arma nuestra historia 🧩💖</h2>
-<div id="puzzle"></div>
+    <h2>Arma nuestra historia 🧩💖</h2>
+    <div id="puzzle"></div>
     <div class="petalos"></div>
 
-<script>
-const puzzle = document.getElementById("puzzle");
-let tiles = [];
+    <script>
+        const puzzle = document.getElementById("puzzle");
+        let tiles = [];
 
-function createPuzzle() {
-    for (let i = 0; i < 9; i++) {
-        const tile = document.createElement("div");
-        tile.classList.add("tile");
-        if (i === 8) {
-            tile.classList.add("empty");
-        } else {
-            let x = (i % 3) * -100;
-            let y = Math.floor(i / 3) * -100;
-            tile.style.backgroundPosition = `${x}px ${y}px`;
+        function createPuzzle() {
+            for (let i = 0; i < 9; i++) {
+                const tile = document.createElement("div");
+                tile.classList.add("tile");
+                if (i === 8) {
+                    tile.classList.add("empty");
+                } else {
+                    let x = (i % 3) * -100;
+                    let y = Math.floor(i / 3) * -100;
+                    tile.style.backgroundPosition = `${x}px ${y}px`;
+                }
+                tile.dataset.index = i;
+                tile.addEventListener("click", moveTile);
+                tiles.push(tile);
+                puzzle.appendChild(tile);
+            }
         }
-        tile.dataset.index = i;
-        tile.addEventListener("click", moveTile);
-        tiles.push(tile);
-        puzzle.appendChild(tile);
-    }
-}
 
-function shuffle() {
-    tiles.sort(() => Math.random() - 0.5);
-    puzzle.innerHTML = "";
-    tiles.forEach(tile => puzzle.appendChild(tile));
-}
+        function shuffle() {
+            tiles.sort(() => Math.random() - 0.5);
+            puzzle.innerHTML = "";
+            tiles.forEach(tile => puzzle.appendChild(tile));
+        }
 
-function moveTile(e) {
-    const index = tiles.indexOf(e.target);
-    const emptyIndex = tiles.findIndex(t => t.classList.contains("empty"));
-    
-    const validMoves = [
-        emptyIndex - 1,
-        emptyIndex + 1,
-        emptyIndex - 3,
-        emptyIndex + 3
-    ];
+        function moveTile(e) {
+            const index = tiles.indexOf(e.target);
+            const emptyIndex = tiles.findIndex(t => t.classList.contains("empty"));
 
-    if (validMoves.includes(index)) {
-        [tiles[index], tiles[emptyIndex]] = [tiles[emptyIndex], tiles[index]];
-        puzzle.innerHTML = "";
-        tiles.forEach(tile => puzzle.appendChild(tile));
-        checkWin();
-    }
-}
+            const validMoves = [
+                emptyIndex - 1,
+                emptyIndex + 1,
+                emptyIndex - 3,
+                emptyIndex + 3
+            ];
 
-function checkWin() {
-    const correct = tiles.every((tile, i) => tile.dataset.index == i);
-    if (correct) {
-        setTimeout(() => {
-            alert("Lo logramos... como todo juntos 💖✨");
-        }, 300);
-    }
-}
+            if (validMoves.includes(index)) {
+                [tiles[index], tiles[emptyIndex]] = [tiles[emptyIndex], tiles[index]];
+                puzzle.innerHTML = "";
+                tiles.forEach(tile => puzzle.appendChild(tile));
+                checkWin();
+            }
+        }
 
-createPuzzle();
-shuffle();
+        function checkWin() {
+            const correct = tiles.every((tile, i) => tile.dataset.index == i);
+            if (correct) {
+                setTimeout(() => {
+                    alert("Lo logramos... como todo juntos 💖✨");
+                }, 300);
+            }
+        }
+
+        createPuzzle();
+        shuffle();
 
 
-    
-const contenedor = document.querySelector(".petalos");
 
-for (let i = 0; i < 25; i++) {
-    let petalo = document.createElement("span");
-    petalo.style.left = Math.random() * 100 + "vw";
-    petalo.style.animationDuration = (Math.random() * 5 + 5) + "s";
-    petalo.style.animationDelay = Math.random() * 5 + "s";
-    contenedor.appendChild(petalo);
-}
-</script>
+        const contenedor = document.querySelector(".petalos");
+
+        for (let i = 0; i < 25; i++) {
+            let petalo = document.createElement("span");
+            petalo.style.left = Math.random() * 100 + "vw";
+            petalo.style.animationDuration = (Math.random() * 5 + 5) + "s";
+            petalo.style.animationDelay = Math.random() * 5 + "s";
+            contenedor.appendChild(petalo);
+        }
+    </script>
 </body>
 
 </html>
-
-
-
-
-
