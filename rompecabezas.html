@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Nuestro Rompecabezas 💖</title>
+<style>
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #111;
+    color: white;
+    font-family: Arial;
+}
+
+#puzzle {
+    width: 300px;
+    height: 300px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+}
+
+.tile {
+    width: 100px;
+    height: 100px;
+    background-image: url('/img/rompecabezas.jpg');
+    background-size: 300px 300px;
+    cursor: pointer;
+}
+
+.empty {
+    background: black;
+}
+</style>
+</head>
+<body>
+
+<h2>Arma nuestra historia 🧩💖</h2>
+<div id="puzzle"></div>
+
+<script>
+const puzzle = document.getElementById("puzzle");
+let tiles = [];
+
+function createPuzzle() {
+    for (let i = 0; i < 9; i++) {
+        const tile = document.createElement("div");
+        tile.classList.add("tile");
+        if (i === 8) {
+            tile.classList.add("empty");
+        } else {
+            let x = (i % 3) * -100;
+            let y = Math.floor(i / 3) * -100;
+            tile.style.backgroundPosition = `${x}px ${y}px`;
+        }
+        tile.dataset.index = i;
+        tile.addEventListener("click", moveTile);
+        tiles.push(tile);
+        puzzle.appendChild(tile);
+    }
+}
+
+function shuffle() {
+    tiles.sort(() => Math.random() - 0.5);
+    puzzle.innerHTML = "";
+    tiles.forEach(tile => puzzle.appendChild(tile));
+}
+
+function moveTile(e) {
+    const index = tiles.indexOf(e.target);
+    const emptyIndex = tiles.findIndex(t => t.classList.contains("empty"));
+    
+    const validMoves = [
+        emptyIndex - 1,
+        emptyIndex + 1,
+        emptyIndex - 3,
+        emptyIndex + 3
+    ];
+
+    if (validMoves.includes(index)) {
+        [tiles[index], tiles[emptyIndex]] = [tiles[emptyIndex], tiles[index]];
+        puzzle.innerHTML = "";
+        tiles.forEach(tile => puzzle.appendChild(tile));
+        checkWin();
+    }
+}
+
+function checkWin() {
+    const correct = tiles.every((tile, i) => tile.dataset.index == i);
+    if (correct) {
+        setTimeout(() => {
+            alert("Lo logramos... como todo juntos 💖✨");
+        }, 300);
+    }
+}
+
+createPuzzle();
+shuffle();
+</script>
+
+</body>
+</html>
