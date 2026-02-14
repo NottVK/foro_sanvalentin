@@ -115,3 +115,12 @@ if(canvas){
 
 }
 
+function abrirMensaje() {
+    document.getElementById("mensajeBox").style.display = "flex";
+}
+
+function cerrarMensaje() {
+    document.getElementById("mensajeBox").style.display = "none";
+}
+
+

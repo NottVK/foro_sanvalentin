@@ -287,3 +287,55 @@ canvas {
     text-decoration:none;
     border-radius:10px;
 }
+
+/* NOTIFICACION */
+.noti {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    padding: 12px 18px;
+    border-radius: 20px;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 0 15px rgba(255,255,255,0.2);
+}
+
+.noti:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+/* MENSAJE */
+.mensaje {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.contenido {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(15px);
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    width: 300px;
+    animation: aparecer 0.4s ease;
+}
+
+.contenido button {
+    margin-top: 15px;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+@keyframes aparecer {
+    from { transform: scale(0.7); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
