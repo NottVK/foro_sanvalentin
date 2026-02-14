@@ -287,32 +287,3 @@ canvas {
     text-decoration:none;
     border-radius:10px;
 }
-.petalos {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    overflow: hidden;
-}
-
-.petalos span {
-    position: absolute;
-    width: 15px;
-    height: 15px;
-    background: pink;
-    border-radius: 50% 50% 50% 0;
-    opacity: 0.8;
-    animation: caer linear infinite;
-}
-
-@keyframes caer {
-    0% {
-        transform: translateY(-10px) rotate(0deg);
-    }
-    100% {
-        transform: translateY(100vh) rotate(360deg);
-    }
-}
-
