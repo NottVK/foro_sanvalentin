@@ -123,4 +123,27 @@ function cerrarMensaje() {
     document.getElementById("mensajeBox").style.display = "none";
 }
 
+if ("Notification" in window) {
+    Notification.requestPermission().then(permission => {
+        console.log("Permiso de notificaciones:", permission); 
+        // permission puede ser "granted", "denied" o "default"
+    });
+}
+function enviarNotificacion(titulo, texto) {
+    if (Notification.permission === "granted") {
+        new Notification(titulo, {
+            body: texto,
+            icon: "rompecabezas.jpg" // opcional, puedes poner un icono bonito
+        });
+    }
+}
+
+function abrirMensaje() {
+    const mensaje = document.querySelector("#mensajeBox p").innerText;
+    document.getElementById("mensajeBox").style.display = "flex";
+    enviarNotificacion("Mensaje de hoy", mensaje);
+}
+
+
+
 
