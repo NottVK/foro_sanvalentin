@@ -18,6 +18,18 @@
   const app = initializeApp(firebaseConfig);
   const messaging =getMessaging(app);
 
+ 
+
+navigator.serviceWorker.register('./firebase-messaging-sw.js')
+.then((registration) => {
+  getToken(messaging, {
+    vapidKey: "BIoVsDy4PZBw0AP6iOUGIQvX4i29X3muX-v3eEoDM1NS_HgHv8CgswymHoThYiDRPiGvi4HKixKUT5UguhW6fmI",
+    serviceWorkerRegistration: registration
+  }).then((currentToken) => {
+    console.log("TOKEN:", currentToken);
+  });
+});
+
 
   // Pedir permiso
   Notification.requestPermission().then((permission) => {
