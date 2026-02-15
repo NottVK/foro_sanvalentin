@@ -124,6 +124,7 @@ function cerrarMensaje() {
 }
 
 // Pedir permiso de notificaciones al cargar
+// Pedir permiso de notificaciones al cargar
 if ("Notification" in window) {
     Notification.requestPermission();
 }
@@ -133,25 +134,37 @@ function enviarNotificacion(titulo, texto) {
     if (Notification.permission === "granted") {
         new Notification(titulo, {
             body: texto,
-            icon: "rompecabezas.jpg" // opcional: un icono bonito
+            icon: "img/rompecabezas.jpg" // opcional: icono bonito
         });
     }
 }
 
-// Abrir mensaje manualmente
+// Abrir mensaje
 function abrirMensaje() {
     const mensajeBox = document.getElementById("mensajeBox");
-    const textoP = document.getElementById("textoMensaje");
-
     mensajeBox.style.display = "flex";
 
-    // Enviar notificación con el texto actual
-    enviarNotificacion("💌 Mensajito de hoy", textoP.innerText);
+    const texto = document.getElementById("textoMensaje").innerText;
+    enviarNotificacion("💌 Mensajito de hoy", texto);
 }
 
 // Cerrar mensaje
 function cerrarMensaje() {
     document.getElementById("mensajeBox").style.display = "none";
+}
+
+// Actualizar mensaje y notificar
+function actualizarMensaje() {
+    const nuevoTexto = document.getElementById("nuevoMensaje").value;
+    if (!nuevoTexto) return; // no hacer nada si está vacío
+
+    const textoP = document.getElementById("textoMensaje");
+    textoP.innerText = nuevoTexto;
+
+    enviarNotificacion("💌 Mensajito de hoy", nuevoTexto);
+
+    // Opcional: limpiar input
+    document.getElementById("nuevoMensaje").value = "";
 }
 
 
