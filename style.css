@@ -339,3 +339,19 @@ canvas {
     from { transform: scale(0.7); opacity: 0; }
     to { transform: scale(1); opacity: 1; }
 }
+
+.botonagujero {
+    display: inline-block;
+    background: #ff4d6d;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.botonagujero:hover {
+    background: #e60039;
+    transform: scale(1.05);
+}
