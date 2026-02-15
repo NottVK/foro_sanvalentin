@@ -15,7 +15,11 @@ const messaging = getMessaging(app);
 
 async function iniciarFirebase() {
   try {
-    const registration = await navigator.serviceWorker.register("./firebase-messaging-sw.js");
+
+    // 🔥 CAMBIO IMPORTANTE AQUÍ
+    const registration = await navigator.serviceWorker.register(
+      "/foro_sanvalentin/firebase-messaging-sw.js"
+    );
 
     const permission = await Notification.requestPermission();
 
