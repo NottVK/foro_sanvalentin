@@ -165,7 +165,46 @@ function update()
 {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  drawStarExit();
+  drawStarExit();function drawStarExit() {
+  if (!starExit.exploding) {
+    // Crear gradiente radial para halo
+    const gradient = ctx.createRadialGradient(
+      starExit.x, starExit.y, 0,
+      starExit.x, starExit.y, starExit.radius * 3 // tamaño del halo
+    );
+    gradient.addColorStop(0, "rgba(255, 255, 100, 1)");  // centro brillante
+    gradient.addColorStop(0.5, "rgba(255, 255, 0, 0.6)");
+    gradient.addColorStop(1, "rgba(255, 255, 0, 0)");    // borde difuso
+
+    ctx.beginPath();
+    ctx.arc(starExit.x, starExit.y, starExit.radius, 0, Math.PI * 2);
+    ctx.fillStyle = "yellow"; // el centro sólido
+    ctx.fill();
+
+    // dibujar el halo brillante
+    ctx.fillStyle = gradient;
+    ctx.beginPath();
+    ctx.arc(starExit.x, starExit.y, starExit.radius * 3, 0, Math.PI * 2);
+    ctx.fill();
+  } else {
+    // Animación de explosión igual que antes
+    starExit.particles.forEach((p, i) => {
+      ctx.fillStyle = `rgba(255, 255, 150, ${p.alpha})`;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 5, 0, Math.PI*2);
+      ctx.fill();
+      p.x += p.dx;
+      p.y += p.dy;
+      p.alpha -= 0.03;
+      if (p.alpha <= 0) starExit.particles.splice(i, 1);
+    });
+
+    if (starExit.particles.length === 0) {
+      window.location.href = "index.html";
+    }
+  }
+}
+
 
 
   // Dibujar nebulosas
