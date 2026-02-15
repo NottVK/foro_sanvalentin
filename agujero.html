@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Agujero Negro</title>
+<style>
+body {
+  margin: 0;
+  overflow: hidden;
+  background: radial-gradient(circle at center, #0a001a, #000);
+}
+
+canvas {
+  display: block;
+}
+</style>
+</head>
+<body>
+
+<canvas id="space"></canvas>
+
+<script>
+const canvas = document.getElementById("space");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const centerX = canvas.width / 2;
+const centerY = canvas.height / 2;
+
+let words = ["Te amo", "Siempre", "Destino", "Eterno", "Luz", "Tú", "Nosotros"];
+
+let particles = [];
+
+function createWord() {
+  const angle = Math.random() * Math.PI * 2;
+  const radius = Math.random() * 400 + 200;
+
+  const x = centerX + Math.cos(angle) * radius;
+  const y = centerY + Math.sin(angle) * radius;
+
+  particles.push({
+    text: words[Math.floor(Math.random() * words.length)],
+    x: x,
+    y: y,
+    speed: 0.5 + Math.random() * 0.5
+  });
+}
+
+function drawBlackHole() {
+  const gradient = ctx.createRadialGradient(centerX, centerY, 10, centerX, centerY, 120);
+  gradient.addColorStop(0, "black");
+  gradient.addColorStop(1, "purple");
+
+  ctx.beginPath();
+  ctx.arc(centerX, centerY, 120, 0, Math.PI * 2);
+  ctx.fillStyle = gradient;
+  ctx.fill();
+}
+
+function update() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  drawBlackHole();
+
+  particles.forEach((p, index) => {
+    const dx = centerX - p.x;
+    const dy = centerY - p.y;
+
+    p.x += dx * 0.01 * p.speed;
+    p.y += dy * 0.01 * p.speed;
+
+    ctx.fillStyle = "white";
+    ctx.font = "20px Arial";
+    ctx.fillText(p.text, p.x, p.y);
+
+    if (Math.abs(dx) < 10 && Math.abs(dy) < 10) {
+      particles.splice(index, 1);
+    }
+  });
+
+  requestAnimationFrame(update);
+}
+
+setInterval(createWord, 1000);
+update();
+</script>
+
+</body>
+</html>
