@@ -25,6 +25,8 @@ canvas {
 <body>
 
 <canvas id="space"></canvas>
+<canvas id="space"></canvas>
+
 
 <script>
 const canvas = document.getElementById("space");
@@ -54,6 +56,66 @@ function createWord() {
     speed: 0.5 + Math.random() * 0.5
   });
 }
+
+// 🔹 Estrella de salida
+let starExit = {
+  x: centerX + 300, 
+  y: centerY - 200,
+  radius: 20,
+  color: "yellow",
+  exploding: false,
+  particles: []
+};
+
+// Detectar click sobre la estrella
+canvas.addEventListener("click", (e) => {
+  const dx = e.clientX - starExit.x;
+  const dy = e.clientY - starExit.y;
+  if (!starExit.exploding && Math.sqrt(dx*dx + dy*dy) < starExit.radius) {
+    starExit.exploding = true;
+    createExplosion(starExit);
+  }
+});
+
+// Crear partículas de explosión
+function createExplosion(star) {
+  for (let i = 0; i < 30; i++) {
+    star.particles.push({
+      x: star.x,
+      y: star.y,
+      dx: (Math.random() - 0.5) * 8,
+      dy: (Math.random() - 0.5) * 8,
+      alpha: 1
+    });
+  }
+}
+
+// Dibujar estrella y explosión
+function drawStarExit() {
+  if (!starExit.exploding) {
+    ctx.beginPath();
+    ctx.arc(starExit.x, starExit.y, starExit.radius, 0, Math.PI*2);
+    ctx.fillStyle = starExit.color;
+    ctx.fill();
+  } else {
+    starExit.particles.forEach((p, i) => {
+      ctx.fillStyle = `rgba(255, 255, 0, ${p.alpha})`;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 5, 0, Math.PI*2);
+      ctx.fill();
+      p.x += p.dx;
+      p.y += p.dy;
+      p.alpha -= 0.03;
+      if (p.alpha <= 0) starExit.particles.splice(i, 1);
+    });
+
+    // Cuando termina la explosión, redirige
+    if (starExit.particles.length === 0) {
+      window.location.href = "index.html"; // vuelve al principal
+    }
+  }
+}
+
 let nebulosas = [];
 
 for (let i = 0; i < 50; i++) {
@@ -102,6 +164,9 @@ function update()
 
 {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  drawStarExit();
+
 
   // Dibujar nebulosas
 nebulosas.forEach(n => {
