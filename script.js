@@ -123,26 +123,37 @@ function cerrarMensaje() {
     document.getElementById("mensajeBox").style.display = "none";
 }
 
+// Pedir permiso de notificaciones al cargar
 if ("Notification" in window) {
-    Notification.requestPermission().then(permission => {
-        console.log("Permiso de notificaciones:", permission); 
-        // permission puede ser "granted", "denied" o "default"
-    });
+    Notification.requestPermission();
 }
+
+// Función de notificación
 function enviarNotificacion(titulo, texto) {
     if (Notification.permission === "granted") {
         new Notification(titulo, {
             body: texto,
-            icon: "rompecabezas.jpg" // opcional, puedes poner un icono bonito
+            icon: "rompecabezas.jpg" // opcional: un icono bonito
         });
     }
 }
 
+// Abrir mensaje manualmente
 function abrirMensaje() {
-    const mensaje = document.querySelector("#mensajeBox p").innerText;
-    document.getElementById("mensajeBox").style.display = "flex";
-    enviarNotificacion("Mensaje de hoy", mensaje);
+    const mensajeBox = document.getElementById("mensajeBox");
+    const textoP = document.getElementById("textoMensaje");
+
+    mensajeBox.style.display = "flex";
+
+    // Enviar notificación con el texto actual
+    enviarNotificacion("💌 Mensajito de hoy", textoP.innerText);
 }
+
+// Cerrar mensaje
+function cerrarMensaje() {
+    document.getElementById("mensajeBox").style.display = "none";
+}
+
 
 
 
