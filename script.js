@@ -1,3 +1,20 @@
+document.getElementById("enviarNoti").addEventListener("click", () => {
+  const mensaje = document.getElementById("mensajeTexto").value;
+
+  fetch("http://localhost:3000/enviar-notificacion", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      token: "EL_TOKEN_DE_TU_NOVIA",
+      titulo: "Mensajito de hoy 💗",
+      mensaje: mensaje
+    })
+  })
+  .then(r => r.json())
+  .then(console.log)
+  .catch(console.error);
+});
+
 // ===== CONTADOR DE TIEMPO =====
 const fechaInicio = new Date(2025, 5, 16, 8, 32);
 
