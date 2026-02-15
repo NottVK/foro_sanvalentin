@@ -157,8 +157,9 @@ function cerrarMensaje() {
 
 
 // ============================================
-window.onload=function(){
+
 function actualizarMensajePrivado(nuevoTexto) {
+    
     if (!nuevoTexto) return;
 
     const textoP = document.getElementById("textoMensaje");
@@ -167,4 +168,4 @@ function actualizarMensajePrivado(nuevoTexto) {
     // Opcional: enviar notificación al instante aunque no haga click
     enviarNotificacion("💌 Mensajito de hoy", nuevoTexto);
 }
-};
+
