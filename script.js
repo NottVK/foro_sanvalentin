@@ -154,7 +154,10 @@ function cerrarMensaje() {
 
 // ============================================
 // Actualizar mensaje desde la consola o código
+
+
 // ============================================
+window.onload=function(){
 function actualizarMensajePrivado(nuevoTexto) {
     if (!nuevoTexto) return;
 
@@ -164,3 +167,4 @@ function actualizarMensajePrivado(nuevoTexto) {
     // Opcional: enviar notificación al instante aunque no haga click
     enviarNotificacion("💌 Mensajito de hoy", nuevoTexto);
 }
+};
