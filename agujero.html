@@ -79,6 +79,57 @@ function drawBlackHole() {
 function update() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+  // 1️⃣ Dibujar palabras primero
+  particles.forEach((p, index) => {
+    const dx = centerX - p.x;
+    const dy = centerY - p.y;
+
+    p.x += dx * 0.01 * p.speed;
+    p.y += dy * 0.01 * p.speed;
+
+    const distance = Math.sqrt(dx * dx + dy * dy);
+
+    // Si entra en la singularidad (radio 90), desaparece
+    if (distance < 90) {
+      particles.splice(index, 1);
+      return;
+    }
+
+    ctx.fillStyle = "white";
+    ctx.font = "20px Arial";
+    ctx.fillText(p.text, p.x, p.y);
+  });
+
+  // 2️⃣ Dibujar horizonte brillante
+  const pulse = 10 * Math.sin(Date.now() * 0.003);
+
+  const gradient = ctx.createRadialGradient(
+    centerX,
+    centerY,
+    90,
+    centerX,
+    centerY,
+    140 + pulse
+  );
+
+  gradient.addColorStop(0, "rgba(150, 0, 255, 0.9)");
+  gradient.addColorStop(0.4, "rgba(200, 0, 255, 0.6)");
+  gradient.addColorStop(1, "rgba(0, 0, 0, 0)");
+
+  ctx.beginPath();
+  ctx.arc(centerX, centerY, 140 + pulse, 0, Math.PI * 2);
+  ctx.fillStyle = gradient;
+  ctx.fill();
+
+  // 3️⃣ Dibujar centro negro al FINAL
+  ctx.beginPath();
+  ctx.arc(centerX, centerY, 90, 0, Math.PI * 2);
+  ctx.fillStyle = "black";
+  ctx.fill();
+
+  requestAnimationFrame(update);
+}
+
   drawBlackHole();
 
   particles.forEach((p, index) => {
@@ -98,7 +149,7 @@ function update() {
   });
 
   requestAnimationFrame(update);
-}
+
 
 setInterval(createWord, 1000);
 update();
