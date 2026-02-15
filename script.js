@@ -124,7 +124,6 @@ function cerrarMensaje() {
 }
 
 // Pedir permiso de notificaciones al cargar
-// Pedir permiso de notificaciones al cargar
 if ("Notification" in window) {
     Notification.requestPermission();
 }
@@ -134,7 +133,7 @@ function enviarNotificacion(titulo, texto) {
     if (Notification.permission === "granted") {
         new Notification(titulo, {
             body: texto,
-            icon: "img/rompecabezas.jpg" // opcional: icono bonito
+            icon: "rompecabezas.jpg" // icono opcional
         });
     }
 }
@@ -153,21 +152,15 @@ function cerrarMensaje() {
     document.getElementById("mensajeBox").style.display = "none";
 }
 
-// Actualizar mensaje y notificar
-function actualizarMensaje() {
-    const nuevoTexto = document.getElementById("nuevoMensaje").value;
-    if (!nuevoTexto) return; // no hacer nada si está vacío
+// ============================================
+// Actualizar mensaje desde la consola o código
+// ============================================
+function actualizarMensajePrivado(nuevoTexto) {
+    if (!nuevoTexto) return;
 
     const textoP = document.getElementById("textoMensaje");
     textoP.innerText = nuevoTexto;
 
+    // Opcional: enviar notificación al instante aunque no haga click
     enviarNotificacion("💌 Mensajito de hoy", nuevoTexto);
-
-    // Opcional: limpiar input
-    document.getElementById("nuevoMensaje").value = "";
 }
-
-
-
-
-
