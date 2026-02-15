@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <title>Agujero Negro</title>
 <style>
+
+    @font-face {
+        font-family: NOTT;
+        src:url(Caveat-Regular.ttf)
+        format("truetype");
+    }
+       
 body {
   margin: 0;
   overflow: hidden;
@@ -29,7 +36,7 @@ canvas.height = window.innerHeight;
 const centerX = canvas.width / 2;
 const centerY = canvas.height / 2;
 
-let words = ["Te amo", "Siempre", "Destino", "Eterno", "Luz", "Tú", "Nosotros"];
+let words = ["Te amo", "Perfecta", "Destino", "Eterno", "Mia", "Maravillosa", "Juntos","Hermosa","Linda","Provocativa","Sexy","Bellisima"];
 
 let particles = [];
 
@@ -129,7 +136,7 @@ nebulosas.forEach(n => {
     }
 
     ctx.fillStyle = "white";
-    ctx.font = "20px Arial";
+    ctx.font = "22px NOTT,cursive";
     ctx.fillText(p.text, p.x, p.y);
   });
 
@@ -173,7 +180,7 @@ nebulosas.forEach(n => {
     p.y += dy * 0.01 * p.speed;
 
     ctx.fillStyle = "white";
-    ctx.font = "20px Arial";
+    ctx.font = "20px NOTT";
     ctx.fillText(p.text, p.x, p.y);
 
     if (Math.abs(dx) < 10 && Math.abs(dy) < 10) {
