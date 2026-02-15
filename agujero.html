@@ -47,6 +47,19 @@ function createWord() {
     speed: 0.5 + Math.random() * 0.5
   });
 }
+let nebulosas = [];
+
+for (let i = 0; i < 50; i++) {
+  nebulosas.push({
+    x: centerX + (Math.random() - 0.5) * 600, // posición alrededor del centro
+    y: centerY + (Math.random() - 0.5) * 600,
+    radius: Math.random() * 50 + 20,
+    color: `rgba(${100 + Math.random()*155}, 0, ${150 + Math.random()*105}, 0.2)`,
+    dx: (Math.random() - 0.5) * 0.2, // movimiento lento
+    dy: (Math.random() - 0.5) * 0.2
+  });
+}
+
 
 function drawBlackHole() {
   // Centro oscuro
@@ -76,8 +89,28 @@ function drawBlackHole() {
   ctx.fillStyle = gradient;
   ctx.fill();
 }
-function update() {
+
+
+function update() 
+
+{
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Dibujar nebulosas
+nebulosas.forEach(n => {
+  n.x += n.dx;
+  n.y += n.dy;
+
+  const gradient = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.radius);
+  gradient.addColorStop(0, n.color);
+  gradient.addColorStop(1, "rgba(0,0,0,0)");
+
+  ctx.beginPath();
+  ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
+  ctx.fillStyle = gradient;
+  ctx.fill();
+});
+
 
   // 1️⃣ Dibujar palabras primero
   particles.forEach((p, index) => {
