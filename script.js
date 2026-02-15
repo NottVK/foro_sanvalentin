@@ -130,4 +130,10 @@ if(canvas){
         canvas.height = window.innerHeight;
     });
 
+}function abrirMensaje() {
+    document.getElementById("mensajeBox").style.display = "flex";
+}
+
+function cerrarMensaje() {
+    document.getElementById("mensajeBox").style.display = "none";
 }
